@@ -35,8 +35,18 @@ private slots:
 
     ///
     /// \brief blueButtonPressed
-    ///Runs the logic for sending a red button signal to the model
+    ///Runs the logic for sending a blue button signal to the model
     void blueButtonPressed();
+
+    ///
+    /// \brief yellowButtonPressed
+    ///Runs the logic for sending a yellow button signal to the model
+    void yellowButtonPressed();
+
+    ///
+    /// \brief blueButtonPressed
+    ///Runs the logic for sending a green button signal to the model
+    void greenButtonPressed();
 
     ///
     /// \brief disableButtons

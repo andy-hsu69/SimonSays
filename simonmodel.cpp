@@ -57,7 +57,7 @@ void SimonModel::startRound()
 {
     if(roundSpeed > 250)
     {
-        roundSpeed -= 75;
+        roundSpeed -= 50;
     }
     emit sendRoundSpeed(roundSpeed);
     progress = 0.0;
@@ -66,7 +66,7 @@ void SimonModel::startRound()
     playerTurn = false;
 
     emit SimonModel::disablePlayerButtons();
-    gameMoves.push_back(rand() % 2);
+    gameMoves.push_back(rand() % 4);
     emit SimonModel::setProgressRange(gameMoves.size());
 
     playerMoves.clear();
@@ -117,7 +117,7 @@ void SimonModel::startRoundFeature()
     playerTurn = false;
 
     emit SimonModel::disablePlayerButtons();
-    gameMoves.push_back(rand() % 2);
+    gameMoves.push_back(rand() % 4);
     emit SimonModel::setProgressRange(gameMoves.size());
 
     playerMoves.clear();

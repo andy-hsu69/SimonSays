@@ -18,6 +18,8 @@ MainWindow::MainWindow(SimonModel& model, QWidget *parent)
     connect(&model, &SimonModel::sendMove, this, &MainWindow::buttonFlash);
     connect(ui->redButton, &QPushButton::clicked, this, &MainWindow::redButtonPressed);
     connect(ui->blueButton, &QPushButton::clicked, this, &MainWindow::blueButtonPressed);
+    connect(ui->greenButton, &QPushButton::clicked, this, &MainWindow::greenButtonPressed);
+    connect(ui->yellowButton, &QPushButton::clicked, this, &MainWindow::yellowButtonPressed);
     connect(&model, &SimonModel::setProgressRange, this, &MainWindow::setProgressBarRange);
     connect(this, &MainWindow::playerMove, &model, &SimonModel::playerButtonPressed);
     connect(&model, &SimonModel::disablePlayerButtons, this, &MainWindow::disableButtons);
@@ -43,10 +45,20 @@ void MainWindow::buttonFlash(int button)
         ui->redButton->setStyleSheet( QString("QPushButton {background-color: rgb(255,100,100);}"));
         QTimer::singleShot(roundSpeedValue / 2, this, [this]() {ui ->redButton->setStyleSheet("QPushButton {background-color: red;} QPushButton:Pressed {background-color: rgb(255, 100, 100);}");});
     }
-    else
+    if(button == 1)
+    {
+        ui->greenButton->setStyleSheet( QString("QPushButton {background-color: rgb(144, 238, 144);}"));
+        QTimer::singleShot(roundSpeedValue / 2, this, [this]() {ui ->greenButton->setStyleSheet("QPushButton {background-color: rgb(0, 163, 108);} QPushButton:Pressed {background-color: rgb(144, 238, 144);}");});
+    }
+    if(button == 2)
     {
         ui->blueButton->setStyleSheet( QString("QPushButton {background-color: rgb(0,191,255);}"));
         QTimer::singleShot(roundSpeedValue / 2, this, [this]() {ui ->blueButton->setStyleSheet("QPushButton {background-color: blue;} QPushButton:Pressed {background-color: rgb(0, 191, 255);}");});
+    }
+    if(button == 3)
+    {
+        ui->yellowButton->setStyleSheet( QString("QPushButton {background-color: rgb(255,255,237);}"));
+        QTimer::singleShot(roundSpeedValue / 2, this, [this]() {ui ->yellowButton->setStyleSheet("QPushButton {background-color: yellow;} QPushButton:Pressed {background-color: rgb(255, 255, 237);}");});
     }
 }
 
@@ -54,12 +66,16 @@ void MainWindow::enableButtons()
 {
     ui->redButton->setEnabled(true);
     ui->blueButton->setEnabled(true);
+    ui->yellowButton->setEnabled(true);
+    ui->greenButton->setEnabled(true);
 }
 
 void MainWindow::disableButtons()
 {
     ui->redButton->setDisabled(true);
     ui->blueButton->setDisabled(true);
+    ui->yellowButton->setDisabled(true);
+    ui->greenButton->setDisabled(true);
 }
 
 void MainWindow::redButtonPressed()
@@ -67,9 +83,19 @@ void MainWindow::redButtonPressed()
     emit playerMove(0);
 }
 
-void MainWindow::blueButtonPressed()
+void MainWindow::greenButtonPressed()
 {
     emit playerMove(1);
+}
+
+void MainWindow::blueButtonPressed()
+{
+    emit playerMove(2);
+}
+
+void MainWindow::yellowButtonPressed()
+{
+    emit playerMove(3);
 }
 
 void MainWindow::receiveRoundSpeed(int speed)
@@ -103,12 +129,16 @@ void MainWindow::youLost()
 {
     ui->redButton->setVisible(false);
     ui->blueButton->setVisible(false);
+    ui->yellowButton->setVisible(false);
+    ui->greenButton->setVisible(false);
 }
 
 void MainWindow::gameStartButtons()
 {
     ui->redButton->setVisible(true);
     ui->blueButton->setVisible(true);
+    ui->yellowButton->setVisible(true);
+    ui->greenButton->setVisible(true);
 }
 
 void MainWindow::resetView()
@@ -117,6 +147,8 @@ void MainWindow::resetView()
     ui->uniqueButton->setVisible(true);
     ui->blueButton->setDisabled(true);
     ui->redButton->setDisabled(true);
+    ui->yellowButton->setDisabled(true);
+    ui->greenButton->setDisabled(true);
 }
 
 MainWindow::~MainWindow()
